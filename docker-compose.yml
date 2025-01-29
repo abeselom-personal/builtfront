@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  php:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - 9000
+    environment:
+      - PHP_FPM_USER=www-data  # Ensure PHP-FPM runs as the correct user
+    networks:
+      - my-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./fastcgi-php.conf:/etc/nginx/snippets/fastcgi-php.conf
+      - ./sub1:/var/www/sub1
+      - ./sub2:/var/www/sub2
+    depends_on:
+      - php
+    networks:
+      - my-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password  # Set your root password here
+      MYSQL_DATABASE: growcrm_grow       # Optional: create a database on startup
+      MYSQL_PASSWORD: my_user_password   # Optional: set the user's password
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    user: "1000:1000"  # Set user ID (UID) and group ID (GID) for the container
+    networks:
+      - my-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    environment:
+      PMA_HOST: mysql-container
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "8081:80"
+    networks:
+      - my-network
+
+volumes:
+  mysql_data:
+
+networks:
+  my-network:
+    driver: bridge

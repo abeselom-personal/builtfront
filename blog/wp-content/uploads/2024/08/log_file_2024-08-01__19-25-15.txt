@@ -1,0 +1,106 @@
+
+---Downloaded files---
+The import files for: Insurance Business were successfully downloaded!
+Initial max execution time = 60
+Files info:
+Site URL = https://builtfront.com/blog
+Data file = /home/builtfront/web/builtfront.com/public_html/blog/wp-content/themes/seargin//inc/demo-content/content.xml
+Widget file = /home/builtfront/web/builtfront.com/public_html/blog/wp-content/themes/seargin//inc/demo-content/widgets.wie
+Customizer file = /home/builtfront/web/builtfront.com/public_html/blog/wp-content/themes/seargin//inc/demo-content/customizer.dat
+Redux files:
+not defined!
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+---Importing widgets---
+Sidebar : 
+
+Search - Search - Imported
+Xpress : Recent Posts - Recent Posts - Imported
+Categories - Categories - Imported
+Tag Cloud - Tags - Imported
+
+Shop Sidebar : 
+
+Product Search - Search - Imported
+Xpress Top Rated Products - Top Rated Products - Imported
+Filter Products by Price - Filter by price - Imported
+Product Tag Cloud - Product tags - Imported
+
+
+
+---Importing customizer settings---
+Customizer settings import finished!
+
+---ocdi/after_import---
+

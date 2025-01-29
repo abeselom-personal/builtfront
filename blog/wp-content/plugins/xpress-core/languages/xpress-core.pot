@@ -1,0 +1,316 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-12-16 13:36+0600\n"
+"PO-Revision-Date: 2023-12-16 13:37+0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: assets\n"
+
+#: elementor/elementor-init.php:49
+msgid "Seargin Addons"
+msgstr ""
+
+#: elementor/elementor-init.php:56
+msgid "Seargin Header & Footer"
+msgstr ""
+
+#: elementor/widgets/about-tab.php:294 elementor/widgets/pricing-tab.php:259
+msgid "Select"
+msgstr ""
+
+#: elementor/widgets/blog-v2.php:103 elementor/widgets/blog-v3.php:103
+#: elementor/widgets/blog-v4.php:182 elementor/widgets/blog-v5.php:103
+#: elementor/widgets/blog.php:182
+msgid "Posts Per Page"
+msgstr ""
+
+#: elementor/widgets/blog-v2.php:122 elementor/widgets/blog-v3.php:122
+#: elementor/widgets/blog-v4.php:201 elementor/widgets/blog-v5.php:122
+#: elementor/widgets/blog.php:201
+msgid "Title Length"
+msgstr ""
+
+#: elementor/widgets/blog-v2.php:305
+msgid "Published on"
+msgstr ""
+
+#: elementor/widgets/blog-v4.php:127 elementor/widgets/blog.php:127
+#: elementor/widgets/contact-me.php:110 elementor/widgets/contact-v2.php:111
+#: elementor/widgets/contact-v3.php:128 elementor/widgets/contact-v4.php:117
+#: elementor/widgets/contact.php:118 elementor/widgets/job-apply.php:110
+#: elementor/widgets/parallax-image.php:105 elementor/widgets/sec-title.php:150
+#: elementor/widgets/xb-button.php:163
+msgid "Left"
+msgstr ""
+
+#: elementor/widgets/blog-v4.php:132 elementor/widgets/blog.php:132
+#: elementor/widgets/contact-me.php:115 elementor/widgets/contact-v2.php:116
+#: elementor/widgets/contact-v3.php:133 elementor/widgets/contact-v4.php:122
+#: elementor/widgets/contact.php:123 elementor/widgets/job-apply.php:115
+#: elementor/widgets/parallax-image.php:110 elementor/widgets/sec-title.php:155
+#: elementor/widgets/xb-button.php:168
+msgid "Center"
+msgstr ""
+
+#: elementor/widgets/blog-v4.php:137 elementor/widgets/blog.php:137
+#: elementor/widgets/contact-me.php:120 elementor/widgets/contact-v2.php:121
+#: elementor/widgets/contact-v3.php:138 elementor/widgets/contact-v4.php:127
+#: elementor/widgets/contact.php:128 elementor/widgets/job-apply.php:120
+#: elementor/widgets/parallax-image.php:115 elementor/widgets/sec-title.php:160
+#: elementor/widgets/xb-button.php:173
+msgid "Right"
+msgstr ""
+
+#: elementor/widgets/blog-v4.php:210 elementor/widgets/blog-v5.php:131
+#: elementor/widgets/blog.php:210
+msgid "Excerpt Length"
+msgstr ""
+
+#: elementor/widgets/career.php:102
+msgid "Career Per Page"
+msgstr ""
+
+#: elementor/widgets/funfact-v2.php:104
+msgid "Loop"
+msgstr ""
+
+#: elementor/widgets/funfact-v2.php:106 elementor/widgets/funfact-v2.php:117
+#: elementor/widgets/funfact-v2.php:128
+#: inc/metabox-and-options/metabox/common-metaboxes.php:52
+#: inc/metabox-and-options/metabox/common-metaboxes.php:68
+#: inc/metabox-and-options/metabox/common-metaboxes.php:203
+#: inc/metabox-and-options/metabox/common-metaboxes.php:225
+#: inc/metabox-and-options/theme-options/career-options.php:17
+#: inc/metabox-and-options/theme-options/portfolio-options.php:17
+#: inc/metabox-and-options/theme-options/woocommerce-options.php:23
+#: inc/metabox-and-options/theme-options/woocommerce-options.php:57
+msgid "Yes"
+msgstr ""
+
+#: elementor/widgets/funfact-v2.php:107 elementor/widgets/funfact-v2.php:118
+#: elementor/widgets/funfact-v2.php:129
+#: inc/metabox-and-options/metabox/common-metaboxes.php:53
+#: inc/metabox-and-options/metabox/common-metaboxes.php:69
+#: inc/metabox-and-options/metabox/common-metaboxes.php:204
+#: inc/metabox-and-options/metabox/common-metaboxes.php:226
+#: inc/metabox-and-options/theme-options/career-options.php:18
+#: inc/metabox-and-options/theme-options/portfolio-options.php:18
+#: inc/metabox-and-options/theme-options/woocommerce-options.php:24
+#: inc/metabox-and-options/theme-options/woocommerce-options.php:58
+msgid "No"
+msgstr ""
+
+#: elementor/widgets/funfact-v2.php:115
+msgid "Autoplay"
+msgstr ""
+
+#: elementor/widgets/funfact-v2.php:126
+msgid "Muted"
+msgstr ""
+
+#: elementor/widgets/funfact-v2.php:169
+msgid "Add Funfact Item"
+msgstr ""
+
+#: elementor/widgets/number-list.php:112
+#: elementor/widgets/portfolio-info.php:106
+#: elementor/widgets/pricing-v2.php:152
+msgid "Add List Item"
+msgstr ""
+
+#: elementor/widgets/portfolio-v2.php:103
+#: elementor/widgets/portfolio-v3.php:103
+msgid "Portfolio Per Page"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:109 elementor/widgets/portfolio.php:159
+msgid "Category Title"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:117
+msgid "Category ID"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:119
+msgid "all"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:135 elementor/widgets/portfolio.php:198
+msgid "Portfolio List"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:144
+msgid "Portfolio Image"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:151
+msgid "Portfolio Category ID"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:153
+msgid "1"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:166 elementor/widgets/pricing-v2.php:100
+#: elementor/widgets/pricing.php:105 elementor/widgets/process.php:142
+#: elementor/widgets/project-v2.php:130 elementor/widgets/project.php:121
+msgid "Title"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:174 elementor/widgets/pricing.php:113
+#: elementor/widgets/process.php:150 elementor/widgets/project-v2.php:138
+#: elementor/widgets/project.php:129
+msgid "Content"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:181
+msgid "Portfolio Button"
+msgstr ""
+
+#: elementor/widgets/portfolio.php:187 elementor/widgets/project.php:156
+msgid "Link"
+msgstr ""
+
+#: elementor/widgets/pricing-v2.php:83 elementor/widgets/pricing.php:83
+msgid "Pricing"
+msgstr ""
+
+#: elementor/widgets/pricing-v2.php:108 elementor/widgets/project-v2.php:92
+msgid "Sub Title"
+msgstr ""
+
+#: elementor/widgets/pricing-v2.php:116 elementor/widgets/pricing.php:97
+msgid "Price"
+msgstr ""
+
+#: elementor/widgets/process.php:111 elementor/widgets/process.php:165
+msgid "Process List"
+msgstr ""
+
+#: elementor/widgets/process.php:157 elementor/widgets/project-v2.php:122
+msgid "Number"
+msgstr ""
+
+#: elementor/widgets/project-v2.php:84 elementor/widgets/project-v2.php:152
+#: elementor/widgets/project.php:111 elementor/widgets/project.php:167
+msgid "Project List"
+msgstr ""
+
+#: elementor/widgets/project.php:136
+msgid "Date"
+msgstr ""
+
+#: elementor/widgets/sec-title.php:91 elementor/widgets/xb-button.php:91
+#: elementor/widgets/xb-social.php:91
+msgid "Design Style"
+msgstr ""
+
+#: elementor/widgets/sec-title.php:94 elementor/widgets/xb-button.php:94
+#: elementor/widgets/xb-social.php:94
+msgid "Style 1"
+msgstr ""
+
+#: elementor/widgets/sec-title.php:95 elementor/widgets/xb-button.php:95
+#: elementor/widgets/xb-social.php:95
+msgid "Style 2"
+msgstr ""
+
+#: elementor/widgets/sec-title.php:96 elementor/widgets/xb-button.php:96
+msgid "Style 3"
+msgstr ""
+
+#: elementor/widgets/sec-title.php:97 elementor/widgets/xb-button.php:97
+msgid "Style 4"
+msgstr ""
+
+#: elementor/widgets/sec-title.php:98
+msgid "Style 5"
+msgstr ""
+
+#: elementor/widgets/sec-title.php:99
+msgid "Style 6"
+msgstr ""
+
+#: elementor/widgets/xb-icon-box-v2.php:113
+msgid "Add Item Box Item"
+msgstr ""
+
+#: inc/custom-widget/top-rated-products-widget.php:14
+msgid "Xpress Top Rated Products"
+msgstr ""
+
+#: inc/custom-widget/top-rated-products-widget.php:15
+msgid "Display top rated products in the sidebar."
+msgstr ""
+
+#: inc/custom-widget/top-rated-products-widget.php:22
+msgid "Top Rated Products"
+msgstr ""
+
+#: inc/metabox-and-options/metabox/common-metaboxes.php:51
+msgid "Header Style"
+msgstr ""
+
+#: inc/metabox-and-options/metabox/common-metaboxes.php:60
+#: inc/metabox-and-options/theme-options/header-options.php:19
+msgid "Select Header Style"
+msgstr ""
+
+#: inc/metabox-and-options/metabox/common-metaboxes.php:67
+msgid "DIsable This page Header?"
+msgstr ""
+
+#: inc/metabox-and-options/metabox/common-metaboxes.php:202
+msgid "Footer Style"
+msgstr ""
+
+#: inc/metabox-and-options/metabox/common-metaboxes.php:210
+#: inc/metabox-and-options/theme-options/footer-options.php:12
+msgid "Select Footer Style"
+msgstr ""
+
+#: inc/metabox-and-options/metabox/common-metaboxes.php:224
+msgid "DIsable This page Footer?"
+msgstr ""
+
+#: inc/metabox-and-options/theme-options/career-options.php:16
+#: inc/metabox-and-options/theme-options/portfolio-options.php:16
+msgid "Breadcrumb"
+msgstr ""
+
+#: inc/metabox-and-options/theme-options/theme-options.php:16
+#, php-format
+msgid "Seargin Options <small>V %s</small>"
+msgstr ""
+
+#: inc/metabox-and-options/theme-options/theme-options.php:19
+msgid "Theme Options"
+msgstr ""
+
+#: inc/metabox-and-options/theme-options/theme-options.php:28
+msgid ""
+"Developed by: <a target=\"_blank\" href=\"https://xpressbuddy."
+"com\">XpressBuddy</a>"
+msgstr ""
+
+#: inc/metabox-and-options/theme-options/woocommerce-options.php:22
+#: inc/metabox-and-options/theme-options/woocommerce-options.php:56
+msgid "Page Breadcrumb"
+msgstr ""
+
+#: inc/post-type/header-footer.php:7
+msgid "Header & Footer"
+msgstr ""
+
+#: inc/post-type/header-footer.php:8
+msgid "Template"
+msgstr ""

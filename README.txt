@@ -1,0 +1,1 @@
+When you apply Update-6, you will have add the key "DEFAULT_PACKAGE_ID=3" in .env file. Otherwise error will occur.

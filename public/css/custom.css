@@ -1,0 +1,193 @@
+/* FONT FAMILY & FONT WEIGHT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400;1,600&display=swap');
+body{
+	font-family: 'Poppins', sans-serif;
+	font-weight: 400;
+}
+.right-sidebar .rpanel-title{
+	font-weight: 400;
+}
+.sidebar-nav ul li a{
+	font-weight: 500;
+}
+
+.text-muted, .profiletimeline .sl-date{
+	color: #757575 !important;
+}
+.ct-label{
+	color: rgb(0 0 0 / 60%)
+}
+
+/* Fix - Knowledgebase line break */
+#main-sidenav{
+	padding-right: 5px;
+}
+
+/* COLOR CHANGE */
+/* Progress bar */
+#nprogress .bar{
+	background:#8bc53f;
+}
+
+/* Notification sidebar */
+.right-sidebar .rpanel-title {
+    background: #8bc53f;
+}
+
+/* Sidebar */
+
+#main-scroll-sidebar .sidebar-nav ul li a{
+	color: #8f8f8f;
+}
+#settings-scroll-sidebar .sidebar-nav ul li a{
+	color: #c9c9c9;
+}
+.sidebar-nav ul li a:hover{
+	color: #8bc53f !important;
+}
+a{
+	color: #5b676d;
+}
+a:hover{
+    color: #73a335;
+    transition: 0.1s;
+}
+a.link:hover, a.link:focus{
+	color: #73a335;
+}
+.sidebar-nav > ul > li.active > a i{
+	color: #8bc53f;
+}
+.sidebar-nav > ul > li.active > a {
+    color: #8bc53f;
+    border-color: #8bc53f;
+}
+.sidebar-nav ul li a.active, .sidebar-nav ul li a:hover{
+	color: #8bc53f;
+}
+.sidebar-nav ul li a.active i, .sidebar-nav ul li a:hover i{
+	color: #8bc53f;
+}
+
+/* Profile dropdown */
+.topbar ul.dropdown-user li a:hover{
+	color: #8bc53f;
+}
+
+/* Other */
+html body .text-themecolor {
+  	color: #8bc53f;;
+}
+
+.text-themecolor{
+	color: #8bc53f !important;
+}
+
+html body blockquote {
+  	border-left: 5px solid #8bc53f;
+}
+html body .bg-theme {
+  	background-color: #8bc53f; 
+}
+ul.list-style-none li a:hover{
+        color: #8bc53f;
+}
+.ribbon-corner:before {
+  	border: 30px solid transparent;
+  	border-top-color: #8bc53f;
+	border-left-color: #8bc53f;
+}
+.ribbon-custom {
+	background: #73a335;
+}
+
+.ribbon-bookmark.ribbon-right.ribbon-custom:before {
+	border-right-color: #8bc53f;
+}
+
+.ribbon-bookmark.ribbon-vertical-l.ribbon-custom:before,
+.ribbon-bookmark.ribbon-vertical-r.ribbon-custom:before {
+	border-right-color: #8bc53f;
+}
+
+.lstick {
+	background: #73a335;
+}
+.right-sidebar .rpanel-title
+	background: #73a335;
+}
+
+.profile-tab li a.nav-link.active,
+.customtab li a.nav-link.active{
+    	border-bottom: 2px solid #8bc53f;
+    	color: #8bc53f;
+}
+.profile-tab li a.nav-link:hover,
+.customtab li a.nav-link:hover{
+    	color: #8bc53f;
+}
+.jq-icon-info {
+  	background-color: #73a335;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus{
+  background-color: #73a335;
+  border-color: #73a335;
+}
+
+.btn-themecolor,
+.btn-themecolor.disabled {
+  	background: #73a335;
+  	border: 1px solid #73a335;
+}
+
+.btn-themecolor:hover,
+.btn-themecolor.disabled:hover{
+    	background: #73a335;
+    	opacity: 0.7;
+    	border: 1px solid #73a335;
+}
+.datepicker table tr td.today,
+.datepicker table tr td.today.disabled,
+.datepicker table tr td.today.disabled:hover,
+.datepicker table tr td.today:hover{
+  	background: #73a335;
+}
+.daterangepicker td.active:hover{
+  	background-color: #73a335;
+}
+
+.form-material .form-control:focus {
+  	background-image: linear-gradient(#8bc53f, #8bc53f), linear-gradient(#73a335, #73a335);
+}
+
+.form-control-line .form-control:focus {
+    border-bottom: 1px solid #8bc53f;
+}
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:after{
+  	background-color: #8bc53f;
+}
+[type="checkbox"]:checked + label:before{
+  	border-right: 2px solid #8bc53f;
+  	border-bottom: 2px solid #8bc53f;
+}
+[type="checkbox"]:indeterminate + label:before {
+	border-right: 2px solid #8bc53f;
+}
+[type="checkbox"].filled-in:checked + label:after {
+  	border: 2px solid #8bc53f;
+  	background-color: #8bc53f;
+}
+.switch label input[type=checkbox]:checked + .lever:after {
+  	background-color: #8bc53f;
+}
+.modal .modal-dialog .modal-header .modal-title{
+	color: #8bc53f;
+}
