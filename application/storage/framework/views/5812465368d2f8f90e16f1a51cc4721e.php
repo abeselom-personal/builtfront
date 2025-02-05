@@ -13,6 +13,15 @@
         </div>
         <?php endif; ?>
 
+        <!--EXPORT-->
+        <?php if(config('visibility.list_page_actions_exporting')): ?>
+        <button type="button" data-toggle="tooltip" title="<?php echo app('translator')->get('lang.export_expenses'); ?>"
+            class="list-actions-button btn btn-page-actions waves-effect waves-dark js-toggle-side-panel"
+            data-target="sidepanel-export-items">
+            <i class="ti-export"></i>
+        </button>
+        <?php endif; ?>
+
         <!--FILTERING-->
         <?php if(config('visibility.list_page_actions_filter_button')): ?>
         <button type="button" data-toggle="tooltip" title="<?php echo e(cleanLang(__('lang.filter'))); ?>"

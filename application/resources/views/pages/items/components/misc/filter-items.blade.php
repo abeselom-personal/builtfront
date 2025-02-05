@@ -4,7 +4,7 @@
         <div class="slimscrollright">
             <!--title-->
             <div class="rpanel-title">
-                <i class="icon-Filter-2"></i>{{ cleanLang(__('lang.filter_catalog')) }}
+                <i class="icon-Filter-2"></i>{{ cleanLang(__('lang.filter_products')) }}
                 <span>
                     <i class="ti-close js-close-side-panels" data-target="sidepanel-filter-items"></i>
                 </span>

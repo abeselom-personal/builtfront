@@ -32,6 +32,29 @@
     <td class="items_col_category ucwords" id="items_col_category_{{ $item->item_id }}">
         {{ str_limit($item->category_name ?? '---', 30) }}</td>
     @endif
+  <!--markup-->
+  <td class="items_col_markup">
+        {{ $item->markup }}%
+    </td>
+
+    <!--margin-->
+    <td class="items_col_margin">
+        {{ runtimeMoneyFormat($item->margin) }}
+    </td>
+    <!-- number sold
+    <td class="items_col_count_sold">
+        {{ $item->count_sold }}
+    </td> -->
+
+
+    <!--amount sold-->
+    <td class="items_col_amount_sold">
+        {{ runtimeMoneyFormat($item->cost) }}
+    </td>
+    <td class="items_col_amount_sold">
+        {{ runtimeMoneyFormat($item->price) }}
+    </td>
+
     @if(config('visibility.items_col_action'))
     <td class="items_col_action actions_column" id="items_col_action_{{ $item->item_id }}">
         <!--action button-->
@@ -40,7 +63,7 @@
             @if(config('visibility.action_buttons_delete'))
             <button type="button" title="{{ cleanLang(__('lang.delete')) }}"
                 class="data-toggle-action-tooltip btn btn-outline-danger btn-circle btn-sm confirm-action-danger"
-                data-confirm-title="{{ cleanLang(__('lang.delete_catalog')) }}"
+                data-confirm-title="{{ cleanLang(__('lang.delete_product')) }}"
                 data-confirm-text="{{ cleanLang(__('lang.are_you_sure')) }}" data-ajax-type="DELETE"
                 data-url="{{ url('/') }}/items/{{ $item->item_id }}">
                 <i class="sl-icon-trash"></i>
@@ -58,7 +81,7 @@
                 <i class="sl-icon-note"></i>
             </button>
             <!--tasks-->
-            <button type="button" title="@lang('lang.catalog_tasks')"
+            <button type="button" title="@lang('lang.product_tasks')"
                 class="data-toggle-action-tooltip btn btn-outline-success btn-circle btn-sm js-toggle-side-panel"
                 data-create-task-action-url="{{ url('items/tasks?item_id='.$item->item_id) }}"
                 data-create-task-url="{{ url('items/tasks/create?item_id='.$item->item_id) }}"

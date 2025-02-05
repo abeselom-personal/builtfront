@@ -518,7 +518,7 @@ class Categories extends Controller {
             'crumbs_special_class' => 'list-pages-crumbs',
             'page' => 'categories',
             'no_results_message' => __('lang.item_not_found'),
-            'add_button_classes' => 'add-edit-invoice-button',
+            'add_button_classes' => 'add-edit-invoice`-button',
             'load_more_button_route' => 'categories',
             'meta_title' => __('lang.categories'),
             'heading' => __('lang.categories'),

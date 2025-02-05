@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>" id="meta-csrf" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <title><?php echo e(config('system.settings_company_name')); ?> <?php echo e((config('system.settings_company_name') && isset($page['meta_title'])) ? '|' : ''); ?> <?php echo e(clean($page['meta_title'] ?? '')); ?></title>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <!--BASEURL-->
     <base href="<?php echo e(url('/')); ?>" target="_self">
 
@@ -247,4 +248,5 @@
 
 
     <?php echo $__env->make('misc.global_head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-</head><?php /**PATH /var/www/html/application/resources/views/layout/header.blade.php ENDPATH**/ ?>
+</head>
+<?php /**PATH /var/www/html/application/resources/views/layout/header.blade.php ENDPATH**/ ?>

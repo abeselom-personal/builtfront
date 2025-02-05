@@ -82,4 +82,5 @@
 <script src="public/js/dynamic/print.js?v=<?php echo e(config('system.versioning')); ?>"></script>
 <?php endif; ?>
 
-</html><?php /**PATH /var/www/html/application/resources/views/layout/wrapper.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH /var/www/html/application/resources/views/layout/wrapper.blade.php ENDPATH**/ ?>

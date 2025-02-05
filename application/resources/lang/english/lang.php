@@ -2704,8 +2704,8 @@ return [
     'end_date_cannot_be_before_start_date' => "End date cannot be before the start date",
     'end_time_cannot_be_before_start_time' => "End time cannot be before the start time",
     'event_can_only_be_all_day' => "This type of event can only be set as all day",
-    
-    
+
+
     //--------------V2.7 Language Changes-------------------
     'email_integration' => "Email Integration",
     'email_integration_status' => "Email Integration Status",
@@ -2779,4 +2779,24 @@ return [
     'filter_catalog' => "Filter Catalog",
     'delete_catalog' => "Delete Catalog",
     'edit_catalog' => "Edit Catalog",
+    // BUDGETS
+    'budget' => 'Budget',
+    'budgets' => 'Budgets',
+    'margin' => 'Margin',
+    'markup' => 'Markup',
+    'number_sold' => 'Number Sold',
+    'amount_sold' => 'Amount Sold',
+    'budget_analysis' => 'Budget Analysis',
+    'estimate_based_calculations' => 'Estimate Based Calculations',
+    'markup_percentage' => 'Markup Percentage',
+    'recalculate' => 'Recalculate',
+    'total_estimated_cost' => 'Total Estimated Cost',
+    'selling_price' => 'Selling Price',
+    'profit_margin' => 'Profit Margin',
+    'cost_vs_price_analysis' => 'Cost vs Price Analysis',
+    'estimate_breakdown' => 'Estimate Breakdown',
+    'types' => 'Types',
+    'cost' => 'Cost',
+    'price' => 'Price',
+
 ];

@@ -264,6 +264,88 @@ function NXCategoriesCreate() {
 
 }
 
+
+
+
+
+/**--------------------------------------------------------------------------------------
+ * [CATEGORIES]
+ * @page : settings/categories
+ * @description: javascript for the categories section (in settings)
+ * -------------------------------------------------------------------------------------*/
+function NXBootTypes() {
+
+    if ($("#categories-table-wrapper").length) {
+
+        //variables
+        var page_section = $("#categories-table-wrapper").attr('data-payload');
+
+
+        //activate left menu, specifically for ticket departments
+        if (page_section == 'ticket') {
+            var current_state = $("#settings-menu-tickets").attr('aria-expanded');
+            if (current_state == 'false') {
+                $("#settings-menu-tickets").trigger('click');
+                $("#settings-menu-tickets-departments").addClass('active');
+            }
+            //exit
+            return;
+        }
+    }
+
+
+}
+
+/**--------------------------------------------------------------------------------------
+ * [TYPES - CREATE AND EDIT]
+ * @description: form validation
+ * -------------------------------------------------------------------------------------*/
+
+function NXTypesCreate() {
+    // Destroy existing validation rules
+    $("#commonModalForm").validate().destroy();
+
+    // Initialize form validation
+    $("#commonModalForm").validate({
+        rules: {
+            name: "required",  // Make sure the 'name' field is required
+        },
+        submitHandler: function (form) {
+            // Perform AJAX request when the form is valid
+            nxAjaxUxRequest($("#commonModalSubmitButton"));
+        }
+    });
+}
+
+let budgetChartInstance = null; // Maintain chart instance reference
+
+function NXProjectBudgetChart(options) {
+    try {
+        // Destroy existing instance
+        if (window.budgetChartInstance) {
+            window.budgetChartInstance.destroy();
+        }
+
+        // Get context
+        const ctx = document.getElementById('budgetChart');
+        if (!ctx) {
+            throw new Error('Canvas element not found');
+        }
+
+        // Create chart
+        window.budgetChartInstance = new Chart(ctx.getContext('2d'), {
+            // your config
+        });
+
+    } catch (error) {
+        console.error('Chart error:', error);
+        // Show error message to user
+        const container = document.getElementById('budgetChart');
+        if (container) {
+            container.innerHTML = `<div class="alert alert-danger">Chart failed to load: ${error.message}</div>`;
+        }
+    }
+}
 /**--------------------------------------------------------------------------------------
  * [CARDS - BOOT JAVASCRIPT FOR ALL ACTIONS ON THE CARD
  * @blade : task\modal.blade.php
@@ -295,7 +377,7 @@ function NXBootCards() {
         });
     }
 
-    //EDIT DESCRIPTION   
+    //EDIT DESCRIPTION
     if ($("#cardModal").length) {
         NX.card_description = $("#card-description-container");
         NX.card_descrition_selector = '#card-description-container';
@@ -875,7 +957,7 @@ function NXBootCards() {
 
 
 /**--------------------------------------------------------------------------------------
- * [AUTHENTICATON] 
+ * [AUTHENTICATON]
  * @blade : task\modal.blade.php
  * @description: all login, signup, forgot password js
  * -------------------------------------------------------------------------------------*/
@@ -999,7 +1081,7 @@ NXAuthentication();
 
 
 /**--------------------------------------------------------------------------------------
- * [COMMENTS] 
+ * [COMMENTS]
  * @blade : comments\wrapper.blade.php
  * @description: show tinymce comment box
  * -------------------------------------------------------------------------------------*/
@@ -1068,7 +1150,7 @@ function NXPostGeneralComment() {
 
 
 /**--------------------------------------------------------------------------------------
- * [COMMENTS] 
+ * [COMMENTS]
  * @blade : contacts\mdals\add-edit.blade.php
  * @description: validation for the add contact form
  * -------------------------------------------------------------------------------------*/
@@ -1089,7 +1171,7 @@ function NXContacts() {
 
 
 /**--------------------------------------------------------------------------------------
- * [ESTIMATE] 
+ * [ESTIMATE]
  * @blade : estimates\components\modals\add-edit-inc.blade.php
  * @description: validation for add/edit estimates form
  * -------------------------------------------------------------------------------------*/
@@ -1109,7 +1191,7 @@ function NXEstimates() {
 }
 
 /**--------------------------------------------------------------------------------------
- * [EXPENSES] 
+ * [EXPENSES]
  * @blade : expenses\components\modals\add-edit-inc.blade.php
  * @description: validation for add/edit expenses form
  * -------------------------------------------------------------------------------------*/
@@ -1272,7 +1354,7 @@ function NXClientUploadLogo() {
 
 
 /**--------------------------------------------------------------------------------------
- * [FILES] 
+ * [FILES]
  * @blade : files\components\modals\add-edit-inc.blade.php
  * @description: validation for add/edit expenses form
  * -------------------------------------------------------------------------------------*/
@@ -1341,7 +1423,7 @@ function NXFiles() {
 
 
 /**--------------------------------------------------------------------------------------
- * [HOME PAGE - ADMIN] 
+ * [HOME PAGE - ADMIN]
  * @blade : home\admin\wrapper.blade.php
  * @description: display dashboard widgets
  * -------------------------------------------------------------------------------------*/
@@ -1467,7 +1549,7 @@ if ($("#js-trigger-home-admin-wrapper").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [HOME PAGE - TEAM] 
+ * [HOME PAGE - TEAM]
  * @blade : home\team\wrapper.blade.php
  * @description: display dashboard widgets
  * -------------------------------------------------------------------------------------*/
@@ -1497,7 +1579,7 @@ if ($("#js-trigger-home-team-wrapper").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [HOME PAGE - CLIENT] 
+ * [HOME PAGE - CLIENT]
  * @blade : home\team\wrapper.blade.php
  * @description: display dashboard widgets
  * -------------------------------------------------------------------------------------*/
@@ -1528,7 +1610,7 @@ if ($("#js-trigger-home-team-wrapper").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [HOME PAGE - CLIENT] 
+ * [HOME PAGE - CLIENT]
  * @blade : home\client\wrapper.blade.php
  * @description: display dashboard widgets
  * -------------------------------------------------------------------------------------*/
@@ -1559,7 +1641,7 @@ if ($("#js-trigger-home-team-wrapper").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [INVOICE - CLONE] 
+ * [INVOICE - CLONE]
  * @blade : invoices\components\modals\clone.blade.php
  * @description: validation for cloning an invoice
  * -------------------------------------------------------------------------------------*/
@@ -1581,7 +1663,7 @@ function NXInvoiceClone() {
 }
 
 /**--------------------------------------------------------------------------------------
- * [ESTIMATE - CLONE] 
+ * [ESTIMATE - CLONE]
  * @blade : estimates\components\modals\clone.blade.php
  * @description: validation for cloning an invoice
  * -------------------------------------------------------------------------------------*/
@@ -1603,7 +1685,7 @@ function NXEstimateClone() {
 
 
 /**--------------------------------------------------------------------------------------
- * [INVOICE - RECURRING] 
+ * [INVOICE - RECURRING]
  * @blade : invoices\components\modals\recurring-settings.blade.php
  * @description: validation for recurring an invoice
  * -------------------------------------------------------------------------------------*/
@@ -1626,7 +1708,7 @@ function NXInvoiceRecurring() {
 
 
 /**--------------------------------------------------------------------------------------
- * [INVOICE - ADD] 
+ * [INVOICE - ADD]
  * @blade : invoices\components\modals\add-edit-inc.blade.php
  * @description: validation for creating an invoice
  * -------------------------------------------------------------------------------------*/
@@ -1648,7 +1730,7 @@ function NXInvoiceCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [ITEMS - ADD - EDIT] 
+ * [ITEMS - ADD - EDIT]
  * @blade : items\components\modals\add-edit-inc.blade.php
  * @description: validation for creating a product
  * -------------------------------------------------------------------------------------*/
@@ -1683,7 +1765,7 @@ function NXItemCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [KB ARTICLE - CREATE] 
+ * [KB ARTICLE - CREATE]
  * @description: validation for creating an article
  * -------------------------------------------------------------------------------------*/
 function NXArticleCreate() {
@@ -1725,7 +1807,7 @@ function NXArticleCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [LEADS - CONVERT] 
+ * [LEADS - CONVERT]
  * @description: validation for converting a lead
  * -------------------------------------------------------------------------------------*/
 function NXLeadConvert() {
@@ -1744,7 +1826,7 @@ function NXLeadConvert() {
 }
 
 /**--------------------------------------------------------------------------------------
- * [LEADS - CREATE] 
+ * [LEADS - CREATE]
  * @description: validation for creating a lead
  * -------------------------------------------------------------------------------------*/
 function NXLeadCreate() {
@@ -1773,7 +1855,7 @@ function NXLeadCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [LEADS - KANBAN] 
+ * [LEADS - KANBAN]
  * @description: bootstrap the kanban board
  * -------------------------------------------------------------------------------------*/
 function NXLeadsKanban() {
@@ -1845,7 +1927,7 @@ if ($(".js-trigger-leads-kanban-board").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [LEADS - CREATE] 
+ * [LEADS - CREATE]
  * @description: validation for creating a lead
  * -------------------------------------------------------------------------------------*/
 function NXTaskCreate() {
@@ -1872,7 +1954,7 @@ function NXTaskCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [LEADS - KANBAN] 
+ * [LEADS - KANBAN]
  * @description: bootstrap the kanban board
  * -------------------------------------------------------------------------------------*/
 function NXTasksKanban() {
@@ -1962,7 +2044,7 @@ if ($("#js-tasks-kanban-wrapper").length) {
 }
 
 /**--------------------------------------------------------------------------------------
- * [LEADS - SHOW] 
+ * [LEADS - SHOW]
  * @description: js on lead card
  * -------------------------------------------------------------------------------------*/
 function NXLeadAttachFiles() {
@@ -2006,7 +2088,7 @@ function NXLeadAttachFiles() {
 
 
 /**--------------------------------------------------------------------------------------
- * [MILESTONE PAGE] 
+ * [MILESTONE PAGE]
  * @description: drag and drop table rows
  * -------------------------------------------------------------------------------------*/
 function NXMilestonesDragDrop() {
@@ -2051,7 +2133,7 @@ if ($("#js-trigger-milestones-sorting").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [MILESTONE MODAL] 
+ * [MILESTONE MODAL]
  * @description: validation on creating milestone
  * -------------------------------------------------------------------------------------*/
 function NXMilestonesCreate() {
@@ -2071,7 +2153,7 @@ function NXMilestonesCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [NOTES MODAL] 
+ * [NOTES MODAL]
  * @description: validation on creating notes
  * -------------------------------------------------------------------------------------*/
 function NXNotesCreate() {
@@ -2095,7 +2177,7 @@ function NXNotesCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [LEFT MENU - CLIENTS] 
+ * [LEFT MENU - CLIENTS]
  * @blade : nav\leftmenu-client.blade.php
  * @description: js for the left menu
  * -------------------------------------------------------------------------------------*/
@@ -2109,7 +2191,7 @@ if ($("#js-trigger-nav-client").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [LEFT MENU - CLIENTS] 
+ * [LEFT MENU - CLIENTS]
  * @blade : nav\leftmenu-team.blade.php
  * @description: js for the left menu
  * -------------------------------------------------------------------------------------*/
@@ -2155,7 +2237,7 @@ if ($("#js-trigger-nav-team").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [STRIPE BUTTON] 
+ * [STRIPE BUTTON]
  * @description: geneate button shown on invoice page
  * -------------------------------------------------------------------------------------*/
 function NXStripePaymentButton() {
@@ -2179,7 +2261,7 @@ function NXStripePaymentButton() {
 
 
 /**--------------------------------------------------------------------------------------
- * [STRIPE BUTTON] 
+ * [STRIPE BUTTON]
  * @description: geneate button shown on invoice page
  * -------------------------------------------------------------------------------------*/
 function NXRazorpayPaymentButton() {
@@ -2228,7 +2310,7 @@ function NXRazorpayPaymentButton() {
 
 
 /**--------------------------------------------------------------------------------------
- * [PAYMENT MODAL] 
+ * [PAYMENT MODAL]
  * @description: validation for creating a new payment
  * -------------------------------------------------------------------------------------*/
 function NXPayementCreate() {
@@ -2249,7 +2331,7 @@ function NXPayementCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [PROJECT DETAILS] 
+ * [PROJECT DETAILS]
  * @description: editing project details on project page
  * -------------------------------------------------------------------------------------*/
 function NXProjectDetails() {
@@ -2301,7 +2383,7 @@ function NXProjectDetails() {
 
 
 /**--------------------------------------------------------------------------------------
- * [PROJECT - DYNAMIC] 
+ * [PROJECT - DYNAMIC]
  * @description: show dynamic project pages
  * -------------------------------------------------------------------------------------*/
 if ($("#dynamic-project-content").length) {
@@ -2310,7 +2392,7 @@ if ($("#dynamic-project-content").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [REPORTS - DYNAMIC] 
+ * [REPORTS - DYNAMIC]
  * @description: show dynamic reports pages
  * -------------------------------------------------------------------------------------*/
 if ($("#dynamic-reports-content").length) {
@@ -2319,7 +2401,7 @@ if ($("#dynamic-reports-content").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [LEFT MENU - CLIENTS] 
+ * [LEFT MENU - CLIENTS]
  * @blade : nav\leftmenu-client.blade.php
  * @description: js for the left menu
  * -------------------------------------------------------------------------------------*/
@@ -2332,7 +2414,7 @@ if ($("#js-trigger-nav-client").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * [PROJECT - CHARTS] 
+ * [PROJECT - CHARTS]
  * @description: render charts of project page
  * -------------------------------------------------------------------------------------*/
 if ($("#project_details").length) {
@@ -2361,7 +2443,7 @@ if ($("#project_details").length) {
 
 
 /**--------------------------------------------------------------------------------------
- * PROJECT - MODAL] 
+ * PROJECT - MODAL]
  * @description: edit projects modal
  * -------------------------------------------------------------------------------------*/
 function NXAddEditProject() {
@@ -2554,7 +2636,7 @@ function NXAddEditProject() {
 
 
 /**--------------------------------------------------------------------------------------
- * CLIENT - MODAL] 
+ * CLIENT - MODAL]
  * @description: edit client modal
  * -------------------------------------------------------------------------------------*/
 function NXAddEditClients() {
@@ -2712,7 +2794,7 @@ function NXTeamCreate() {
 
 
 /**--------------------------------------------------------------------------------------
- * [TICKET COMPOSE] 
+ * [TICKET COMPOSE]
  * @description: create new ticket
  * -------------------------------------------------------------------------------------*/
 if ($("#ticket-compose-form").length) {
@@ -3542,7 +3624,7 @@ function NXSettingsPaypal() {
 
 /**--------------------------------------------------------------------------------------
  * [SETTINGS - BANK]
- * @description: form validation 
+ * @description: form validation
  * -------------------------------------------------------------------------------------*/
 function NXSettingsBank() {
     $("#settingsFormBank").validate({
@@ -3699,7 +3781,7 @@ function NXRecordMyTmeModal() {
 
 /**--------------------------------------------------------------------------------------
  * This is an extenstion of NXRecordMyTmeModal() we use this on the task list page
- * to enable buttons and fields that were disabled by NXRecordMyTmeModal() 
+ * to enable buttons and fields that were disabled by NXRecordMyTmeModal()
  * @description: form validation
  * -------------------------------------------------------------------------------------*/
 function NXRecordMyTmeModalExtra() {
@@ -3831,7 +3913,7 @@ $(document).ready(function () {
 
 
 /**--------------------------------------------------------------------------------------
- * PROJECT - MODAL] 
+ * PROJECT - MODAL]
  * @description: edit projects modal
  * -------------------------------------------------------------------------------------*/
 function NXAddEditProjectTemplate() {
@@ -3985,7 +4067,7 @@ function NXremindersPanelClose() {
 
 
 /**--------------------------------------------------------------------------------------
- * [PROJECT DETAILS] 
+ * [PROJECT DETAILS]
  * @description: editing client details on client page
  * -------------------------------------------------------------------------------------*/
 function NXClientDetails() {
@@ -4502,7 +4584,7 @@ function NXUpdateUserTheme() {
 
 
 /**--------------------------------------------------------------------------------------
- * [TASKS - RECURRING] 
+ * [TASKS - RECURRING]
  * @blade : tasks\components\modals\recurring-settings.blade.php
  * @description: validation for recurring an task
  * -------------------------------------------------------------------------------------*/

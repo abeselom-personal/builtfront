@@ -9,6 +9,7 @@
 
 namespace App\Http\Responses\Categories;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Support\Facades\Log;
 
 class EditResponse implements Responsable {
 
@@ -42,7 +43,7 @@ class EditResponse implements Responsable {
         //show modal barter
         $jsondata['dom_visibility'][] = array('selector' => '#commonModalFooter', 'action' => 'show');
 
-        
+
         // POSTRUN FUNCTIONS------
         $jsondata['postrun_functions'][] = [
             'value' => 'NXCategoriesCreate',

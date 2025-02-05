@@ -13,6 +13,15 @@
         </div>
         @endif
 
+        <!--EXPORT-->
+        @if(config('visibility.list_page_actions_exporting'))
+        <button type="button" data-toggle="tooltip" title="@lang('lang.export_expenses')"
+            class="list-actions-button btn btn-page-actions waves-effect waves-dark js-toggle-side-panel"
+            data-target="sidepanel-export-items">
+            <i class="ti-export"></i>
+        </button>
+        @endif
+
         <!--FILTERING-->
         @if(config('visibility.list_page_actions_filter_button'))
         <button type="button" data-toggle="tooltip" title="{{ cleanLang(__('lang.filter')) }}"

@@ -14,4 +14,9 @@
 <?php if(auth()->user()->is_team): ?>
 <?php echo $__env->make('pages.itemtasks.components.tasks-side-panel', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php endif; ?>
-<!--automation tasks--><?php /**PATH /var/www/html/application/resources/views/pages/items/components/table/wrapper.blade.php ENDPATH**/ ?>
+<!--automation tasks-->
+
+<!--export-->
+<?php if(config('visibility.list_page_actions_exporting')): ?>
+<?php echo $__env->make('pages.export.items.export', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php endif; ?><?php /**PATH /var/www/html/application/resources/views/pages/items/components/table/wrapper.blade.php ENDPATH**/ ?>

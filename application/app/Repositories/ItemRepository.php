@@ -128,7 +128,13 @@ class ItemRepository {
         $item->item_creatorid = auth()->id();
         $item->item_description = request('item_description');
         $item->item_unit = request('item_unit');
+        $item->markup = request('item_markup');
+        $item->margin = request('item_margin');
         $item->item_rate = request('item_rate');
+        $item->type_id = request('item_typeid');
+        $item->cost = request('item_cost');
+        $item->price = request('item_price');
+
         $item->item_notes_estimatation = request('item_notes_estimatation');
 
         //save and return id
@@ -157,7 +163,12 @@ class ItemRepository {
         $item->item_description = request('item_description');
         $item->item_unit = request('item_unit');
         $item->item_rate = request('item_rate');
+        $item->markup = request('item_markup');
+        $item->margin = request('item_margin');
+        $item->type_id = request('item_typeid');
         $item->item_notes_estimatation = request('item_notes_estimatation');
+        $item->cost = request('item_cost');
+        $item->price = request('item_price');
 
         //save
         if ($item->save()) {

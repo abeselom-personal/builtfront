@@ -35,6 +35,33 @@
     <td class="items_col_category ucwords" id="items_col_category_<?php echo e($item->item_id); ?>">
         <?php echo e(str_limit($item->category_name ?? '---', 30)); ?></td>
     <?php endif; ?>
+  <!--markup-->
+  <td class="items_col_markup">
+        <?php echo e($item->markup); ?>%
+    </td>
+
+    <!--margin-->
+    <td class="items_col_margin">
+        <?php echo e(runtimeMoneyFormat($item->margin)); ?>
+
+    </td>
+    <!-- number sold
+    <td class="items_col_count_sold">
+        <?php echo e($item->count_sold); ?>
+
+    </td> -->
+
+
+    <!--amount sold-->
+    <td class="items_col_amount_sold">
+        <?php echo e(runtimeMoneyFormat($item->cost)); ?>
+
+    </td>
+    <td class="items_col_amount_sold">
+        <?php echo e(runtimeMoneyFormat($item->price)); ?>
+
+    </td>
+
     <?php if(config('visibility.items_col_action')): ?>
     <td class="items_col_action actions_column" id="items_col_action_<?php echo e($item->item_id); ?>">
         <!--action button-->
@@ -43,7 +70,7 @@
             <?php if(config('visibility.action_buttons_delete')): ?>
             <button type="button" title="<?php echo e(cleanLang(__('lang.delete'))); ?>"
                 class="data-toggle-action-tooltip btn btn-outline-danger btn-circle btn-sm confirm-action-danger"
-                data-confirm-title="<?php echo e(cleanLang(__('lang.delete_catalog'))); ?>"
+                data-confirm-title="<?php echo e(cleanLang(__('lang.delete_product'))); ?>"
                 data-confirm-text="<?php echo e(cleanLang(__('lang.are_you_sure'))); ?>" data-ajax-type="DELETE"
                 data-url="<?php echo e(url('/')); ?>/items/<?php echo e($item->item_id); ?>">
                 <i class="sl-icon-trash"></i>
@@ -61,7 +88,7 @@
                 <i class="sl-icon-note"></i>
             </button>
             <!--tasks-->
-            <button type="button" title="<?php echo app('translator')->get('lang.catalog_tasks'); ?>"
+            <button type="button" title="<?php echo app('translator')->get('lang.product_tasks'); ?>"
                 class="data-toggle-action-tooltip btn btn-outline-success btn-circle btn-sm js-toggle-side-panel"
                 data-create-task-action-url="<?php echo e(url('items/tasks?item_id='.$item->item_id)); ?>"
                 data-create-task-url="<?php echo e(url('items/tasks/create?item_id='.$item->item_id)); ?>"
@@ -109,4 +136,5 @@
     <?php endif; ?>
 </tr>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-<!--each row--><?php /**PATH /var/www/html/application/resources/views/pages/items/components/table/ajax.blade.php ENDPATH**/ ?>
+<!--each row-->
+<?php /**PATH /var/www/html/application/resources/views/pages/items/components/table/ajax.blade.php ENDPATH**/ ?>

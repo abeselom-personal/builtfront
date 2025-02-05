@@ -405,6 +405,11 @@
                                 id="settings-menu-categories-item" href="javascript:void(0);"
                                 data-url="/categories?filter_category_type=item&source=ext">{{ cleanLang(__('lang.categories')) }}
                             </a>
+                            <li><a class="settings-menu-link js-ajax-ux-request js-submenu-ajax js-dynamic-settings-url hidden"
+                                id="settings-menu-items-types" href="javascript:void(0);"
+                                data-url="/types?filter_type_type=item&source=ext">{{ cleanLang(__('lang.types')) }}
+                            </a>
+                        </li>
                         </li>
                     </ul>
                 </li>

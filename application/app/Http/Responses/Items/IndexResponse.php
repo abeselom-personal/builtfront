@@ -140,7 +140,7 @@ class IndexResponse implements Responsable {
             $page['url'] = loadMoreButtonUrl($items->currentPage() + 1, request('source'));
             $page['loading_target'] = 'items-td-container';
             $page['visibility_show_load_more'] = ($items->currentPage() < $items->lastPage()) ? true : false;
-            return view('pages/items/wrapper', compact('page', 'items', 'categories'))->render();
+            return view('pages/items/wrapper', compact('page', 'items', 'categories','grouped_items','item_types'))->render();
         }
 
     }

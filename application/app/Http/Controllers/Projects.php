@@ -16,6 +16,7 @@ use App\Http\Responses\Common\ChangeCategoryResponse;
 use App\Http\Responses\Projects\PinningResponse;
 use App\Http\Responses\Projects\ActivateResponse;
 use App\Http\Responses\Projects\ArchiveResponse;
+use App\Http\Responses\Projects\BudgetsResponse;
 use App\Http\Responses\Projects\BulkChangeStatusResponse;
 use App\Http\Responses\Projects\BulkChangeStatusUpdateResponse;
 use App\Http\Responses\Projects\ChangeAssignedResponse;
@@ -43,6 +44,7 @@ use App\Http\Responses\Projects\UpdateProgressResponse;
 use App\Http\Responses\Projects\UpdateResponse;
 use App\Http\Responses\Projects\Views\CardResponse;
 use App\Http\Responses\Projects\Views\ListResponse;
+use App\Models\BudgetItem;
 use App\Permissions\ProjectPermissions;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ClientRepository;
@@ -54,6 +56,7 @@ use App\Repositories\EventRepository;
 use App\Repositories\EventTrackingRepository;
 use App\Repositories\FileFolderRepository;
 use App\Repositories\FileRepository;
+use App\Repositories\ItemRepository;
 use App\Repositories\MilestoneCategoryRepository;
 use App\Repositories\MilestoneRepository;
 use App\Repositories\PinnedRepository;
@@ -63,6 +66,7 @@ use App\Repositories\ProjectManagerRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\TimerRepository;
+use App\Repositories\TypeRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -70,7 +74,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class Projects extends Controller {
+class Projects extends Controller
+{
 
     /**
      * The project repository instance.
@@ -133,7 +138,8 @@ class Projects extends Controller {
         EmailerRepository $emailerrepo,
         FileRepository $filerepo,
         FileFolderRepository $filefolderrepo,
-        CustomFieldsRepository $customrepo) {
+        CustomFieldsRepository $customrepo
+    ) {
 
         //parent
         parent::__construct();
@@ -221,7 +227,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function index(CategoryRepository $categoryrepo) {
+    public function index(CategoryRepository $categoryrepo)
+    {
 
         //get team projects
         $projects = $this->projectrepo->search();
@@ -251,11 +258,10 @@ class Projects extends Controller {
 
         //show the the corretc vew
         switch (auth()->user()->pref_view_projects_layout) {
-        case 'list':
-            return new ListResponse($payload);
-        case 'card':
-            return new CardResponse($payload);
-
+            case 'list':
+                return new ListResponse($payload);
+            case 'card':
+                return new CardResponse($payload);
         }
     }
 
@@ -264,7 +270,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function create(CategoryRepository $categoryrepo) {
+    public function create(CategoryRepository $categoryrepo)
+    {
 
         //new project default permissions settings
         $project = $this->defautProjectPermissions();
@@ -317,7 +324,8 @@ class Projects extends Controller {
         MilestoneCategoryRepository $milestonecategories,
         ClientRepository $clientrepo,
         CloneProjectRepository $clonerepo,
-        ProjectManagerRepository $managerrepo) {
+        ProjectManagerRepository $managerrepo
+    ) {
 
         //what are we creating
         if (is_numeric(request('project_template_selector'))) {
@@ -532,7 +540,6 @@ class Projects extends Controller {
 
         //process reponse
         return new StoreResponse($payload);
-
     }
 
     /**
@@ -541,7 +548,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function show(TimerRepository $timerrepo, $id) {
+    public function show(TimerRepository $timerrepo, $id)
+    {
 
         //get the project
         $projects = $this->projectrepo->search($id);
@@ -609,7 +617,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function showDynamic($id) {
+    public function showDynamic($id)
+    {
 
         //get the project
         $projects = $this->projectrepo->search($id);
@@ -621,29 +630,33 @@ class Projects extends Controller {
 
         //apply permissions
         $this->applyPermissions($project);
-
+        //log
+        Log::info('User has viewed project #' . $id);
         //set dynamic url for use in template
         switch (request()->segment(3)) {
-        case 'files':
-        case 'invoices':
-        case 'expenses':
-        case 'estimates':
-        case 'payments':
-        case 'timesheets':
-        case 'notes':
-        case 'tickets':
-        case 'milestones':
-        case 'tasks':
-            $sections = request()->segment(3);
-            $section = rtrim($sections, 's');
-            $page['dynamic_url'] = url($sections . '?source=ext&' . $section . 'resource_type=project&' . $section . 'resource_id=' . $project->project_id);
-            break;
-        case 'details':
-            $page['dynamic_url'] = url('projects/' . $project->project_id . '/project-details');
-            break;
-        default:
-            $page['dynamic_url'] = url('comments?source=ext&commentresource_type=project&commentresource_id=' . $project->project_id);
-            break;
+            case 'files':
+            case 'invoices':
+            case 'expenses':
+            case 'estimates':
+            case 'payments':
+            case 'timesheets':
+            case 'notes':
+            case 'tickets':
+            case 'milestones':
+            case 'tasks':
+                $sections = request()->segment(3);
+                $section = rtrim($sections, 's');
+                $page['dynamic_url'] = url($sections . '?source=ext&' . $section . 'resource_type=project&' . $section . 'resource_id=' . $project->project_id);
+                break;
+            case 'details':
+                $page['dynamic_url'] = url('projects/' . $project->project_id . '/project-details');
+                break;
+            case 'budgets':
+                $page['dynamic_url'] = url('projects/' . $project->project_id . '/project-budgets');
+                break;
+            default:
+                $page['dynamic_url'] = url('comments?source=ext&commentresource_type=project&commentresource_id=' . $project->project_id);
+                break;
         }
 
         //reponse payload
@@ -662,7 +675,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoryRepository $categoryrepo, $id) {
+    public function edit(CategoryRepository $categoryrepo, $id)
+    {
 
         //get the project
         $projects = $this->projectrepo->search($id, ['apply_filters' => false]);
@@ -704,7 +718,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProjectValidation $request, ProjectAssignedRepository $assignedrepo, ProjectManagerRepository $managerrepo, $id) {
+    public function update(ProjectValidation $request, ProjectAssignedRepository $assignedrepo, ProjectManagerRepository $managerrepo, $id)
+    {
 
         //get project
         $projects = $this->projectrepo->search($id, ['apply_filters' => false]);
@@ -824,7 +839,8 @@ class Projects extends Controller {
      * @param model client model - only when showing the edit modal form
      * @return collection
      */
-    public function getCustomFields($obj = '') {
+    public function getCustomFields($obj = '')
+    {
 
         //set typs
         request()->merge([
@@ -858,7 +874,8 @@ class Projects extends Controller {
      * @param model client model - only when showing the edit modal form
      * @return collection
      */
-    public function getClientCustomFields($obj = '') {
+    public function getClientCustomFields($obj = '')
+    {
 
         //set typs
         request()->merge([
@@ -888,7 +905,8 @@ class Projects extends Controller {
      * Returns false when all is ok
      * @return \Illuminate\Http\Response
      */
-    public function customFieldValidationFailed() {
+    public function customFieldValidationFailed()
+    {
 
         //custom field validation
         $fields = \App\Models\CustomField::Where('customfields_type', 'projects')->get();
@@ -913,7 +931,8 @@ class Projects extends Controller {
      * @param object DestroyRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyRepository $destroyrepo) {
+    public function destroy(DestroyRepository $destroyrepo)
+    {
 
         //delete each record in the array
         $allrows = array();
@@ -937,7 +956,6 @@ class Projects extends Controller {
 
         //generate a response
         return new DestroyResponse($payload);
-
     }
 
     /**
@@ -945,7 +963,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function details($id) {
+    public function details($id)
+    {
 
         //get the project
         $project = $this->projectrepo->search($id, ['apply_filters' => false]);
@@ -975,11 +994,61 @@ class Projects extends Controller {
         return new DetailsResponse($payload);
     }
 
+
+
+    /**
+     * Return ajax details for project
+     * @param int $id project id
+     * @return \Illuminate\Http\Response
+     */
+    // ProjectsController.php
+    public function budgets($id, ItemRepository $itemrepo) {
+        $items = $itemrepo->search();
+        Log::info('Items: ', $items->toArray());
+        $project = $this->projectrepo->search($id)->first();
+        $budgetItems = BudgetItem::where('item_id', $id)->with('budget')->get();
+
+        // Compute necessary budget data
+        $total_cost = $budgetItems->sum('cost');
+        $markup_percentage = $budgetItems->avg('markup') ?? 0;
+        $margin_percentage = $budgetItems->avg('margin') ?? 0;
+        $selling_price = $total_cost + ($total_cost * ($markup_percentage / 100));
+
+        // Generate chart data (example)
+        $chart_data = [
+            'labels' => $budgetItems->pluck('id'),
+            'data' => $budgetItems->pluck('cost'),
+            'colors' => array_fill(0, count($budgetItems), '#4CAF50')
+        ];
+
+        $payload = [
+            'page' => $this->pageSettings('project', $project),
+            'project' => $project,
+            'data' => $items,
+            'estimates' => $budgetItems,
+            'total_cost' => $total_cost,
+            'markup_percentage' => $markup_percentage,
+            'selling_price' => $selling_price,
+            'margin_percentage' => $margin_percentage,
+            'chart_data' => $chart_data
+        ];
+
+        // Log budget details
+        Log::info('Budget details retrieved for project #' . $id, [
+            'total_cost' => $total_cost,
+            'markup_percentage' => $markup_percentage,
+            'selling_price' => $selling_price,
+            'margin_percentage' => $margin_percentage
+        ]);
+        return new BudgetsResponse($payload);
+    }
+
     /**
      * array of default project users permissions.
      * @return array
      */
-    private function defautProjectPermissions() {
+    private function defautProjectPermissions()
+    {
         //default permissions
         return [
             'clientperm_tasks_view' => config('system.settings_projects_clientperm_tasks_view'),
@@ -998,7 +1067,8 @@ class Projects extends Controller {
      * project permission options are not made available during project creation process
      * @return null
      */
-    private function defautProjectPermissionsMerge() {
+    private function defautProjectPermissionsMerge()
+    {
 
         //get the permissios array
         $permissions = $this->defautProjectPermissions();
@@ -1015,7 +1085,8 @@ class Projects extends Controller {
      * Show the form for changing a projects status
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus() {
+    public function changeStatus()
+    {
 
         //get the project
         $project = \App\Models\Project::Where('project_id', request()->route('project'))->first();
@@ -1035,7 +1106,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function stopAllTimers(TimerRepository $timerepo, $id) {
+    public function stopAllTimers(TimerRepository $timerepo, $id)
+    {
 
         //stop all running timers for this project
         $data = [
@@ -1058,7 +1130,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function archive($id) {
+    public function archive($id)
+    {
 
         //get project and update status
         $project = \App\Models\Project::Where('project_id', $id)->first();
@@ -1088,7 +1161,8 @@ class Projects extends Controller {
      * @param int $id project id
      * @return \Illuminate\Http\Response
      */
-    public function activate($id) {
+    public function activate($id)
+    {
 
         //get project and update status
         $project = \App\Models\Project::Where('project_id', $id)->first();
@@ -1116,7 +1190,8 @@ class Projects extends Controller {
      * change status project status
      * @return \Illuminate\Http\Response
      */
-    public function changeStatusUpdate(ProjectAutomationRepository $automationrepo) {
+    public function changeStatusUpdate(ProjectAutomationRepository $automationrepo)
+    {
 
         //validate the project exists
         $project = \App\Models\Project::Where('project_id', request()->route('project'))->first();
@@ -1208,7 +1283,8 @@ class Projects extends Controller {
      * update project description and also the tags
      * @return \Illuminate\Http\Response
      */
-    public function updateDescription() {
+    public function updateDescription()
+    {
 
         //get the project
         $project = \App\Models\Project::Where('project_id', request()->route('project'))->first();
@@ -1235,7 +1311,6 @@ class Projects extends Controller {
 
         //response
         return new UpdateDetailsResponse($payload);
-
     }
 
     /**
@@ -1243,7 +1318,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function changeCategory(CategoryRepository $categoryrepo) {
+    public function changeCategory(CategoryRepository $categoryrepo)
+    {
 
         //get all project categories
         $categories = $categoryrepo->get('project');
@@ -1262,7 +1338,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function changeCategoryUpdate(CategoryRepository $categoryrepo) {
+    public function changeCategoryUpdate(CategoryRepository $categoryrepo)
+    {
 
         //validate the category exists
         if (!\App\Models\Category::Where('category_id', request('category'))
@@ -1313,7 +1390,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function assignedUsers($id) {
+    public function assignedUsers($id)
+    {
 
         //permission
         if (auth()->user()->role->role_assign_projects != 'yes') {
@@ -1345,7 +1423,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function assignedUsersUpdate(ProjectAssignedRepository $assignedrepo, $id) {
+    public function assignedUsersUpdate(ProjectAssignedRepository $assignedrepo, $id)
+    {
 
         //get the project
         $projects = $this->projectrepo->search($id, ['apply_filters' => false]);
@@ -1438,7 +1517,8 @@ class Projects extends Controller {
      * @param object project instance of the project model object
      * @return object
      */
-    private function applyPermissions($project = '') {
+    private function applyPermissions($project = '')
+    {
 
         //sanity - make sure this is a valid project object
         if ($project instanceof \App\Models\Project) {
@@ -1454,7 +1534,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function createClone(CategoryRepository $categoryrepo, $id) {
+    public function createClone(CategoryRepository $categoryrepo, $id)
+    {
 
         //get the project
         $project = \App\Models\Project::Where('project_id', $id)->first();
@@ -1480,7 +1561,8 @@ class Projects extends Controller {
      * clone the project
      * @return \Illuminate\Http\Response
      */
-    public function storeClone(CloneProjectRepository $clonerepo, $id) {
+    public function storeClone(CloneProjectRepository $clonerepo, $id)
+    {
 
         //get the invoice
         if (!$project = \App\Models\Project::Where('project_id', $id)->first()) {
@@ -1547,7 +1629,8 @@ class Projects extends Controller {
      * prefill the project using the project template data
      * @return \Illuminate\Http\Response
      */
-    public function prefillProject() {
+    public function prefillProject()
+    {
 
         //get the template
         $template = \App\Models\Project::Where('project_id', request('id'))->first();
@@ -1576,7 +1659,8 @@ class Projects extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changeProgress($id) {
+    public function changeProgress($id)
+    {
 
         //check if file exists in the database
         $project = \App\Models\Project::Where('project_id', $id)->first();
@@ -1589,7 +1673,6 @@ class Projects extends Controller {
 
         //show the form
         return new UpdateProgressResponse($payload);
-
     }
 
     /**
@@ -1598,7 +1681,8 @@ class Projects extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changeProgressUpdate($id) {
+    public function changeProgressUpdate($id)
+    {
 
         //check if file exists in the database
         $project = \App\Models\Project::Where('project_id', $id)->first();
@@ -1626,7 +1710,6 @@ class Projects extends Controller {
 
         //show the form
         return new UpdateProgressResponse($payload);
-
     }
 
     /**
@@ -1634,7 +1717,8 @@ class Projects extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function changeCoverImage($id) {
+    public function changeCoverImage($id)
+    {
 
         //check if file exists in the database
         $project = \App\Models\Project::Where('project_id', $id)->first();
@@ -1654,7 +1738,6 @@ class Projects extends Controller {
 
         //render
         return response()->json($jsondata);
-
     }
 
     /**
@@ -1663,7 +1746,8 @@ class Projects extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changeCoverImageUpdate(FileRepository $filerepo, $id) {
+    public function changeCoverImageUpdate(FileRepository $filerepo, $id)
+    {
 
         //upload data
         $data = [
@@ -1699,7 +1783,6 @@ class Projects extends Controller {
 
         //return the reposnse
         return new ChangeCoverResponse($payload);
-
     }
 
     /**
@@ -1708,7 +1791,8 @@ class Projects extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function removeCoverImage($id) {
+    public function removeCoverImage($id)
+    {
 
         //reset existing account owner
         \App\Models\Project::where('project_id', $id)
@@ -1733,7 +1817,6 @@ class Projects extends Controller {
 
         //return the reposnse
         return new RemoveCoverResponse($payload);
-
     }
 
     /**
@@ -1741,7 +1824,8 @@ class Projects extends Controller {
      * @param int $id project  id
      * @return \Illuminate\Http\Response
      */
-    public function editAutomation($id) {
+    public function editAutomation($id)
+    {
 
         //get the project
         $project = $this->projectrepo->search($id);
@@ -1777,7 +1861,8 @@ class Projects extends Controller {
      * @param int $id estimate  id
      * @return \Illuminate\Http\Response
      */
-    public function updateAutomation(ProjectUpdateAutomation $request, CategoryRepository $categoryrepo, $id) {
+    public function updateAutomation(ProjectUpdateAutomation $request, CategoryRepository $categoryrepo, $id)
+    {
 
         //get the project
         $projects = $this->projectrepo->search($id, ['apply_filters' => false]);
@@ -1832,7 +1917,8 @@ class Projects extends Controller {
      * @param  obj $project project model
      * @return \Illuminate\Http\Response
      */
-    public function applyDefaultAutomation($project_id) {
+    public function applyDefaultAutomation($project_id)
+    {
 
         //validation
         if (request('automation') != 'on') {
@@ -1855,7 +1941,6 @@ class Projects extends Controller {
         $project->project_automation_invoice_email_client = $settings->settings2_projects_automation_invoice_email_client;
         $project->project_automation_invoice_due_date = $settings->settings2_projects_automation_invoice_due_date;
         $project->save();
-
     }
 
     /**
@@ -1864,7 +1949,8 @@ class Projects extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function setFileBasedCoverImage($id) {
+    public function setFileBasedCoverImage($id)
+    {
 
         $project = \App\Models\Project::Where('project_id', $id)->first();
 
@@ -1897,7 +1983,6 @@ class Projects extends Controller {
 
         //return the reposnse
         return new SetFileCoverResponse();
-
     }
 
     /**
@@ -1905,11 +1990,11 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function BulkChangeStatus() {
+    public function BulkChangeStatus()
+    {
 
         //reponse payload
-        $payload = [
-        ];
+        $payload = [];
 
         //show the form
         return new BulkChangeStatusResponse($payload);
@@ -1920,7 +2005,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function BulkChangeStatusUpdate(ProjectAutomationRepository $automationrepo) {
+    public function BulkChangeStatusUpdate(ProjectAutomationRepository $automationrepo)
+    {
 
         //update each project
         $allrows = array();
@@ -2024,7 +2110,8 @@ class Projects extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function BulkchangeAssigned() {
+    public function BulkchangeAssigned()
+    {
 
         //reponse payload
         $payload = [];
@@ -2038,7 +2125,8 @@ class Projects extends Controller {
      * @param object ProjectAssignedRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function BulkchangeAssignedUpdate(ProjectAssignedRepository $assignedrepo) {
+    public function BulkchangeAssignedUpdate(ProjectAssignedRepository $assignedrepo)
+    {
 
         //vars
         $allrows = [];
@@ -2131,7 +2219,6 @@ class Projects extends Controller {
                             }
                         }
                     }
-
                 }
 
                 //get refreshed
@@ -2160,7 +2247,8 @@ class Projects extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function togglePinning(PinnedRepository $pinrepo, $id) {
+    public function togglePinning(PinnedRepository $pinrepo, $id)
+    {
 
         //toggle pin
         $status = $pinrepo->togglePinned($id, 'project');
@@ -2173,7 +2261,6 @@ class Projects extends Controller {
 
         //generate a response
         return new PinningResponse($payload);
-
     }
 
     /**
@@ -2182,7 +2269,8 @@ class Projects extends Controller {
      * @param array $data any other data (optional)
      * @return array
      */
-    private function pageSettings($section = '', $data = []) {
+    private function pageSettings($section = '', $data = [])
+    {
 
         //common settings
         $page = [
@@ -2294,7 +2382,8 @@ class Projects extends Controller {
      * data for the stats widget
      * @return array
      */
-    private function statsWidget($data = array()) {
+    private function statsWidget($data = array())
+    {
 
         //get expense (all rows - for stats etc)
         $count_all = $this->projectrepo->search('', ['stats' => 'count-all']);
@@ -2333,5 +2422,4 @@ class Projects extends Controller {
         //return
         return $stats;
     }
-
 }

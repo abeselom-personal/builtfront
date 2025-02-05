@@ -9,6 +9,7 @@
 
 namespace App\Http\Responses\Categories;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Support\Facades\Log;
 
 class CreateResponse implements Responsable {
 
@@ -32,6 +33,8 @@ class CreateResponse implements Responsable {
         }
 
         //render the form
+        Log::info('Categories Edit Response', ['page' => $page]);
+
         $html = view('pages/categories/components/modals/add-edit-inc', compact('page'))->render();
         $jsondata['dom_html'][] = array(
             'selector' => '#commonModalBody',

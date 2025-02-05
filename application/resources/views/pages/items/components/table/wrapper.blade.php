@@ -15,3 +15,8 @@
 @include('pages.itemtasks.components.tasks-side-panel')
 @endif
 <!--automation tasks-->
+
+<!--export-->
+@if(config('visibility.list_page_actions_exporting'))
+@include('pages.export.items.export')
+@endif

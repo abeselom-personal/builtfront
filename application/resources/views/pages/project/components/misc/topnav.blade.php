@@ -17,6 +17,16 @@
                     data-url="{{ _url('/projects') }}/{{ $project->project_id }}/project-details"
                     href="#projects_ajaxtab" role="tab">{{ cleanLang(__('lang.details')) }}</a>
             </li>
+
+                <!--budget-->
+                <li class="nav-item">
+                <a class="nav-link tabs-menu-budgets   js-dynamic-url js-ajax-ux-request" data-toggle="tab"
+                    id="tabs-menu-budgets" data-loading-class="loading-tabs"
+                    data-loading-target="embed-content-container"
+                    data-dynamic-url="{{ _url('/projects') }}/{{ $project->project_id }}/budgets"
+                    data-url="{{ _url('/projects') }}/{{ $project->project_id }}/project-budgets"
+                    href="#projects_ajaxtab" role="tab">{{ cleanLang(__('lang.budget')) }}</a>
+            </li>
             <!--[tasks]-->
             @if(config('settings.project_permissions_view_tasks'))
             <li class="nav-item">

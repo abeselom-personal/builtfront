@@ -32,9 +32,12 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\ItemRepository;
 use App\Repositories\PinnedRepository;
 use App\Repositories\ProductTaskRepository;
+use App\Repositories\TypeRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+
+use function Laravel\Prompts\search;
 
 class Items extends Controller {
 
@@ -115,13 +118,22 @@ class Items extends Controller {
      * @param object Category instance of the repository
      * @return blade view | ajax view
      */
-    public function index(CategoryRepository $categoryrepo, Category $categorymodel) {
+    public function index(CategoryRepository $categoryrepo, Category $categorymodel,TypeRepository $typerepo) {
 
         //get items
         $items = $this->itemrepo->search();
 
         //get all categories (type: item) - for filter panel
         $categories = $categoryrepo->get('item');
+        $typetypes = $typerepo->search();
+
+        $gitems = $items->groupBy('category_id')->map(function($items, $key) use ($categorymodel) {
+            return [
+                'id' => $key,
+                'name' => $categorymodel->findOrFail($key)->category_name,
+                'items' => $items,
+            ];
+        });
 
         //reponse payload
         $payload = [
@@ -129,6 +141,8 @@ class Items extends Controller {
             'items' => $items,
             'count' => $items->count(),
             'categories' => $categories,
+            'grouped_items' => $gitems,
+            'item_types' => $typetypes
         ];
 
         //show the view
@@ -160,10 +174,11 @@ class Items extends Controller {
      * @param object CategoryRepository instance of the repository
      * @return \Illuminate\Http\Response
      */
-    public function create(CategoryRepository $categoryrepo) {
+    public function create(CategoryRepository $categoryrepo, TypeRepository $typerepo) {
 
         //client categories
         $categories = $categoryrepo->get('item');
+        $types = $typerepo->search();
 
         //units
         $units = $this->unitrepo->search();
@@ -172,6 +187,7 @@ class Items extends Controller {
         $payload = [
             'page' => $this->pageSettings('create'),
             'categories' => $categories,
+            'item_types' => $types,
             'units' => $units,
         ];
 
@@ -228,13 +244,14 @@ class Items extends Controller {
      * @param int $id item id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoryRepository $categoryrepo, $id) {
+    public function edit(CategoryRepository $categoryrepo, $id, TypeRepository $typerepo) {
 
         //get the item
         $item = $this->itemrepo->search($id);
 
         //client categories
         $categories = $categoryrepo->get('item');
+        $types = $typerepo->search();
 
         //units
         $units = $this->unitrepo->search();
@@ -249,6 +266,7 @@ class Items extends Controller {
             'page' => $this->pageSettings('edit'),
             'item' => $item,
             'categories' => $categories,
+            'item_types' => $types,
             'units' => $units,
         ];
 
@@ -744,7 +762,7 @@ class Items extends Controller {
         $page = [
             'crumbs' => [
                 __('lang.sales'),
-                __('lang.catalog'),
+                __('lang.products'),
             ],
             'crumbs_special_class' => 'list-pages-crumbs',
             'page' => 'items',
@@ -761,7 +779,7 @@ class Items extends Controller {
 
         //default modal settings (modify for sepecif sections)
         $page += [
-            'add_modal_title' => __('lang.add_catalog'),
+            'add_modal_title' => __('lang.add_product'),
             'add_modal_create_url' => url('items/create?itemresource_id=' . request('itemresource_id') . '&itemresource_type=' . request('itemresource_type')),
             'add_modal_action_url' => url('items?itemresource_id=' . request('itemresource_id') . '&itemresource_type=' . request('itemresource_type')),
             'add_modal_action_ajax_class' => '',
@@ -772,8 +790,8 @@ class Items extends Controller {
         //items list page
         if ($section == 'items') {
             $page += [
-                'meta_title' => __('lang.catalog'),
-                'heading' => __('lang.catalog'),
+                'meta_title' => __('lang.products'),
+                'heading' => __('lang.products'),
                 'sidepanel_id' => 'sidepanel-filter-items',
             ];
             if (request('source') == 'ext') {

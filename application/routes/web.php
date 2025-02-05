@@ -1,6 +1,7 @@
 <?php
 
 //TESTING [DEV]
+
 Route::get("test", "Test@index");
 Route::post("test", "Test@index");
 
@@ -215,6 +216,9 @@ Route::group(['prefix' => 'products'], function () {
 });
 Route::resource('catalog', 'Items');
 
+//Item Types
+Route::resource('types', 'Types');
+
 //EXPENSES
 Route::group(['prefix' => 'expenses'], function () {
     Route::any("/search", "Expenses@index");
@@ -245,6 +249,8 @@ Route::group(['prefix' => 'projects'], function () {
     Route::post("/{project}/change-status", "Projects@changeStatusUpdate")->where('project', '[0-9]+');
     Route::get("/{project}/project-details", "Projects@details")->where('project', '[0-9]+');
     Route::post("/{project}/project-details", "Projects@updateDescription")->where('project', '[0-9]+');
+    Route::get("/{project}/project-budgets", "Projects@budgets")->where('project', '[0-9]+');
+    Route::post("/{project}/project-budgets", "Projects@updateBudgets")->where('project', '[0-9]+');
     Route::put("/{project}/stop-all-timers", "Projects@stopAllTimers")->where('project', '[0-9]+');
     Route::put("/{project}/archive", "Projects@archive")->where('project', '[0-9]+');
     Route::put("/{project}/activate", "Projects@activate")->where('project', '[0-9]+');
@@ -269,7 +275,7 @@ Route::group(['prefix' => 'projects'], function () {
 
     //dynamic load
     Route::any("/{project}/{section}", "Projects@showDynamic")
-        ->where(['project' => '[0-9]+', 'section' => 'details|comments|files|tasks|invoices|payments|timesheets|expenses|estimates|milestones|tickets|notes']);
+        ->where(['project' => '[0-9]+', 'section' => 'details|budgets|comments|files|tasks|invoices|payments|timesheets|expenses|estimates|milestones|tickets|notes']);
 });
 Route::resource('projects', 'Projects');
 
@@ -1002,6 +1008,7 @@ Route::group(['prefix' => 'app/settings'], function () {
     Route::get("/{any}", "Settings\Dynamic@showDynamic")->where(['any' => '.*']);
 });
 Route::get("app/categories", "Settings\Dynamic@showDynamic");
+Route::get("app/types", "Settings\Dynamic@showDynamic");
 Route::get("app/tags", "Settings\Dynamic@showDynamic");
 
 //SETTINGS - CRONJOBS
@@ -1282,3 +1289,11 @@ Route::resource('cs/affiliates/earnings', 'CS_Affiliates\Earnings');
 
 //AFFILATE PROFIT
 Route::get("/cs/affiliate/my/earnings", "CS_Affiliates\Profit@index");
+
+//BUDGET ROUTE - CALCULATOR
+Route::get("/budget/getByProductId/{productId}", "Budget@getByProductId")->name("budget.getByProductId");
+Route::post('/budget/insert', 'BudgetController@insert');
+Route::post('/budget/add', 'BudgetController@add');
+Route::resource('budget', 'BudgetController')->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
