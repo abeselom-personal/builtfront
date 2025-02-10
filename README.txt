@@ -21,7 +21,6 @@
      - Run Laravel migrations:  
        ```sh
        php artisan migrate --database=landlord
-       php artisan migrate --database=tenant
        ```
 
 ---
